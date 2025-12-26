@@ -75,9 +75,11 @@ export async function GET() {
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
           user_id UUID NOT NULL,
           product_id UUID NOT NULL,
+          quantity INTEGER DEFAULT 1,
           created_at TIMESTAMP DEFAULT NOW(),
           CONSTRAINT fk_cart_user FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
-          CONSTRAINT fk_cart_product FOREIGN KEY(product_id) REFERENCES products(id) ON DELETE CASCADE
+          CONSTRAINT fk_cart_product FOREIGN KEY(product_id) REFERENCES products(id) ON DELETE CASCADE,
+          CONSTRAINT unique_cart_item UNIQUE (user_id, product_id)
         )
       `;
 
@@ -85,10 +87,13 @@ export async function GET() {
       await sql`
         CREATE TABLE orders (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-          user_id UUID NOT NULL,
-          product_id UUID NOT NULL,
+          user_id UUID ,
+          product_id UUID ,
+          quantity INTEGER NOT NULL DEFAULT 1,
+          price INTEGER NOT NULL,
+          product_title VARCHAR(255),
           created_at TIMESTAMP DEFAULT NOW(),
-          CONSTRAINT fk_order_user FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+          CONSTRAINT fk_order_user FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE SET NULL,
           CONSTRAINT fk_order_product FOREIGN KEY(product_id) REFERENCES products(id) ON DELETE SET NULL
         )
       `;
@@ -101,6 +106,7 @@ export async function GET() {
         VALUES ('test@example.com', ${hashedPassword}, 'Test User', 'credentials')
         RETURNING id
       `;
+
       const testUserId = testUser[0].id;
 
       // [7] 상품 데이터 삽입 (price * 100 적용)
