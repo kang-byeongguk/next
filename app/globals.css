@@ -1,9 +1,102 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default, forest --prefersdark;
+  root: ":root";
+  include: ;
+  exclude: ;
+  prefix: ;
+  logs: true;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98% 0 0);
+  --color-base-300: oklch(95% 0 0);
+  --color-base-content: oklch(20% 0.042 265.755);
+  --color-primary: oklch(64% 0.222 41.116);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(65% 0.241 354.308);
+  --color-secondary-content: oklch(94% 0.028 342.258);
+  --color-accent: oklch(77% 0.152 181.912);
+  --color-accent-content: oklch(38% 0.063 188.416);
+  --color-neutral: oklch(39% 0.07 227.392);
+  --color-neutral-content: oklch(92% 0.004 286.32);
+  --color-info: oklch(74% 0.16 232.661);
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: oklch(76% 0.177 163.223);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(82% 0.189 84.429);
+  --color-warning-content: oklch(47% 0.137 46.201);
+  --color-error: oklch(71% 0.194 13.428);
+  --color-error-content: oklch(27% 0.105 12.094);
+  --radius-selector: 0.25rem;
+  --radius-field: 2rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+
+@plugin "daisyui/theme" {
+  name: "forest";
+  default: false;
+  prefersdark: true;
+  color-scheme: "dark";
+  --color-base-100: oklch(44% 0.03 256.802);
+  --color-base-200: oklch(27% 0.033 256.848);
+  --color-base-300: oklch(21% 0.034 264.665);
+  --color-base-content: oklch(96% 0.003 264.542);
+  --color-primary: oklch(64% 0.222 41.116);
+  --color-primary-content: oklch(0% 0 0);
+  --color-secondary: oklch(69.776% 0.135 168.327);
+  --color-secondary-content: oklch(13.955% 0.027 168.327);
+  --color-accent: oklch(70.628% 0.119 185.713);
+  --color-accent-content: oklch(14.125% 0.023 185.713);
+  --color-neutral: oklch(30.698% 0.039 171.364);
+  --color-neutral-content: oklch(86.139% 0.007 171.364);
+  --color-info: oklch(72.06% 0.191 231.6);
+  --color-info-content: oklch(0% 0 0);
+  --color-success: oklch(64.8% 0.15 160);
+  --color-success-content: oklch(0% 0 0);
+  --color-warning: oklch(84.71% 0.199 83.87);
+  --color-warning-content: oklch(0% 0 0);
+  --color-error: oklch(71.76% 0.221 22.18);
+  --color-error-content: oklch(0% 0 0);
+  --radius-selector: 0.25rem;
+  --radius-field: 2rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+/* 크롬, 사파리, 엣지용 */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* 파이어폭스용 */
+html {
+  scrollbar-width: none;
+}
+
+body {
+  -ms-overflow-style: none; /* IE, 엣지 구버전용 */
 }
 
 @theme inline {
