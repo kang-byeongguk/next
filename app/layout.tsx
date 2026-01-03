@@ -28,9 +28,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex flex-col">
+        <div className="flex flex-col bg-base-100">
             <div className="w-full"><Navbar/></div>
-            <div className="grow p-6 md:p-12">{children}</div>
+            <div className="grow p-6 px-5 md:px-20">{children}</div>
         </div>
       </body>
     </html>
