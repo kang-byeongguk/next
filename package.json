@@ -9,21 +9,22 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "lucide-react": "^0.562.0",
     "next": "16.0.10",
     "postgres": "^3.4.7",
     "react": "19.2.1",
     "react-dom": "19.2.1"
-  },"pnpm": {
+  },
+  "pnpm": {
     "onlyBuiltDependencies": [
-      "bcrypt",
+      "bcryptjs",
       "sharp"
     ]
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/bcrypt": "^6.0.0",
+    "@types/bcryptjs": "^3.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
