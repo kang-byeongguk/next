@@ -4,7 +4,7 @@
 
 import postgres from 'postgres';
 import Link from 'next/link';
-import Carousel from '../ui/carousel';
+import Carousel from './ui/carousel';
 
 // 1. DB 연결 (Server Component라서 여기서 바로 연결해도 안전합니다)
 const sql = postgres(process.env.POSTGRES_URL!, {
