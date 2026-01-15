@@ -47,7 +47,7 @@ export async function GET() {
           password VARCHAR(255), 
           name VARCHAR(255),
           image TEXT,
-          provider VARCHAR(50) DEFAULT 'credentials', --'kakao' or 'credentials'
+          provider VARCHAR(50) DEFAULT 'credentials' NOT NULL, --'kakao' or 'credentials'
           created_at TIMESTAMP DEFAULT NOW()
         )
       `;
