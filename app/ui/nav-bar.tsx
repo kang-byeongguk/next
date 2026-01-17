@@ -1,7 +1,7 @@
 import { Menu, User } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import ThemeController from "./theme-controller";
+import Logo from "./logo";
 
 export default function Navbar() {
 
@@ -24,7 +24,7 @@ export default function Navbar() {
         </ul>
       </div>
       <Link href="/" >
-        <Image width={682} height={446} alt="logo" src="/logo.png" className="w-18" ></Image>
+        <Logo/>
       </Link>
     </div>
     <div className="navbar-center hidden md:flex lg:gap-0">
@@ -48,3 +48,5 @@ export default function Navbar() {
     </div>
   </div>)
 }
+
+

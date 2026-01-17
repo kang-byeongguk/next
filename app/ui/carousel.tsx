@@ -72,9 +72,12 @@ export default function Carousel() {
     <div className="flex flex-col items-center justify-center gap-6 w-full">
       <div className="w-full overflow-hidden rounded-xl h-auto md:h-96 shadow-sm ">
         <div
-          className={`flex h-full ${transition ? `transition-transform duration-${SLIDE_DURATION} ease-in-out` : "transition-none"
+          className={`flex h-full ${transition ? `transition-transform ease-in-out` : "transition-none"
             }`}
-          style={{ transform: `translateX(-${currentPage * 100}%)` }}
+          style={{ 
+    transform: `translateX(-${currentPage * 100}%)`,
+    transitionDuration: transition ? `${SLIDE_DURATION}ms` : '0ms' 
+  }}
         >
           {extendedHeroSlides.map((slide, index) => (
             <div
