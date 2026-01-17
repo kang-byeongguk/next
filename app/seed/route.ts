@@ -59,7 +59,7 @@ export async function GET() {
           title VARCHAR(255) NOT NULL,
           price INTEGER NOT NULL, -- 센트 단위 저장 (예: 10995)
           description TEXT,
-          image TEXT,
+          image TEXT NOT NULL,
           user_id UUID, 
           created_at TIMESTAMP DEFAULT NOW(),
           CONSTRAINT fk_user
