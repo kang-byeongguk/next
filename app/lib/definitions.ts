@@ -15,7 +15,7 @@ export type Product = {
   title: string;
   price: number; // 센트 단위 정수 (예: $10.99 -> 1099)
   description: string | null;
-  image: string | null;
+  image: string;
   user_id: string | null; // 판매자(등록자) ID
   created_at: Date;
 };
@@ -40,3 +40,6 @@ export type Order = {
   created_at: Date;
 };
 
+export type FormattedProduct=Omit<Product,'price'>&{
+  price:string;
+};
