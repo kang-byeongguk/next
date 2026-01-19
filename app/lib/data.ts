@@ -1,5 +1,5 @@
 import postgres from "postgres";
-import { Product } from "./definitions";
+import { Product, User } from "./definitions";
 import { formatCurrency } from "./utils";
 const sql=postgres(process.env.POSTGRES_URL!,{ssl:'require'});
 
@@ -105,4 +105,14 @@ export async function fetchProductById(id:string){
     console.error('Database Error:',error);
     throw new Error('fetchProducts 함수 실행중 에러 발생')
  }
+}
+
+export async function getUser(email: string): Promise<User | undefined> {
+    try {
+        const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
+        return user[0];
+    } catch (error) {
+        console.error('Failed to fetch user:', error);
+        throw new Error('Failed to fetch user.');
+    }
 }
