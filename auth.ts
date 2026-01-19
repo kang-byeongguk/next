@@ -1,18 +1,18 @@
 import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
-import { z } from 'zod';
 import bcrypt from 'bcryptjs';
 import { getUser } from './app/lib/data';
-import { SignInSchema } from './app/lib/schema';
+import { SignSchema } from './app/lib/schema';
+import Kakao from 'next-auth/providers/kakao';
 
 
 
-export const { auth, signIn, signOut } = NextAuth({
+export const { handlers,auth, signIn, signOut } = NextAuth({
     ...authConfig,
-    providers: [Credentials({
+    providers: [Kakao,Credentials({
         async authorize(credentials) {
-            const parsedCredentials = SignInSchema.safeParse(credentials);
+            const parsedCredentials = SignSchema.safeParse(credentials);
 
             if (parsedCredentials.success) {
                 const { email, password } = parsedCredentials.data;

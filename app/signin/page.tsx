@@ -3,8 +3,10 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { authenticate } from "../lib/actions";
-import LoginToast from "../ui/toast";
+import ErrorToast from "../ui/toast";
 import { EmailIcon, KakaoLogo, PasswordIcon } from "../ui/icons";
+import { signIn } from "@/auth";
+import KaKaoSocialLogin from "../ui/kakao-social-login";
 
 
 export default function Signin() {
@@ -54,10 +56,7 @@ export default function Signin() {
           </div>
 
           {/* 2. 소셜 로그인 (Kakao) */}
-          <button className="btn w-full btn-sm h-10 min-h-10 bg-[#FEE502] text-[#181600] border-[#f1d800] hover:bg-[#ebd300] hover:border-[#ebd300]">
-            <KakaoLogo />
-            Continue with Kakao
-          </button>
+          <KaKaoSocialLogin/>
 
           {/* 3. 구분선 */}
           <div className="my-4 divider text-xs text-base-content/50 uppercase">OR</div>
@@ -142,7 +141,7 @@ export default function Signin() {
       </div>
 
 
-      <LoginToast
+      <ErrorToast
         isVisible={showToast}
         onClose={() => setShowToast(false)}
         message={errorMessage?.message}
