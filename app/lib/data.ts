@@ -1,7 +1,7 @@
 import postgres from "postgres";
 import { Product, User } from "./definitions";
 import { formatCurrency } from "./utils";
-const sql=postgres(process.env.POSTGRES_URL!,{ssl:'require'});
+export const sql=postgres(process.env.POSTGRES_URL!,{ssl:'require'});
 
 export async function fetchLatestProducts(){
  try{

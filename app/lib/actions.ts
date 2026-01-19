@@ -1,11 +1,12 @@
 // app/lib/actions.ts
 'use server';
 
+
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { SignSchema } from './schema';
 import bcrypt from 'bcryptjs';
-import { sql } from '../seed/route';
+import { sql } from './data';
 
 // State 타입 정의: 에러 메시지와 필드별 에러를 포함
 export type State = {
