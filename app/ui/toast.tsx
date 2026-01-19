@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { ErrorIcon } from "./icons";
 
-interface LoginToastProps {
+interface ErrorToastProps {
   isVisible: boolean;
   onClose: () => void;
   message: string | undefined;
 }
 
-export default function LoginToast({ isVisible, onClose, message }: LoginToastProps) {
+export default function ErrorToast({ isVisible, onClose, message }: ErrorToastProps) {
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
