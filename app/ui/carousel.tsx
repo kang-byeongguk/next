@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -38,7 +38,7 @@ export default function Carousel() {
   //  2. currentPage가 마지막 이미지(0번째 이미지 복사본)이면 transition효과 없이 0번째 이미지로 순간이동하여 자연스러운 애니메이션 구현
   const [currentPage, setCurrentPage] = useState(0);
   const [transition, setTransition] = useState(true);
-  const extendedHeroSlides = [...heroSlides, heroSlides[0]];
+  const extendedHeroSlides = useMemo(() => [...heroSlides, heroSlides[0]], []);
   const SLIDE_DURATION = 700;
 
   useEffect(() => {
@@ -72,12 +72,12 @@ export default function Carousel() {
     <div className="flex flex-col items-center justify-center gap-6 w-full">
       <div className="w-full overflow-hidden rounded-xl h-auto md:h-96 shadow-sm ">
         <div
-          className={`flex h-full ${transition ? `transition-transform ease-in-out` : "transition-none"
+          className={`flex h:auto md:h-full ${transition ? `transition-transform ease-in-out` : "transition-none"
             }`}
-          style={{ 
-    transform: `translateX(-${currentPage * 100}%)`,
-    transitionDuration: transition ? `${SLIDE_DURATION}ms` : '0ms' 
-  }}
+          style={{
+            transform: `translateX(-${currentPage * 100}%)`,
+            transitionDuration: transition ? `${SLIDE_DURATION}ms` : '0ms'
+          }}
         >
           {extendedHeroSlides.map((slide, index) => (
             <div
@@ -141,9 +141,10 @@ export default function Carousel() {
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`h-1.5 rounded-full transition-all duration-${SLIDE_DURATION} ${isActive ? "bg-primary w-4" : "bg-base-300 hover:bg-base-content/20 w-2"
+              className={`h-1.5 rounded-full transition-all  ${isActive ? "bg-primary w-4" : "bg-base-300 hover:bg-base-content/20 w-2"
                 }`}
               aria-label={`Go to slide ${index + 1}`}
+              style={{ transitionDuration: `${SLIDE_DURATION}ms` }}
             />
           );
         })}
