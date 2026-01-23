@@ -6,6 +6,7 @@ export type User = {
   name: string | null;
   image: string | null;
   provider: string; // 'credentials' | 'kakao' 등
+  role:string;
   created_at: Date;
 };
 
