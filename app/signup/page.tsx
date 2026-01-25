@@ -122,7 +122,7 @@ export default function Signin() {
                     <div className="mt-8 text-center text-sm">
                         <span className="text-base-content/60">Already have an account?
                         </span>
-                        <Link href="/signup" className="text-primary font-semibold hover:underline">
+                        <Link href="/signin" className="text-primary font-semibold hover:underline">
                             sign in
                         </Link>
                     </div>
