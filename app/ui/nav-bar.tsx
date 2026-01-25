@@ -1,12 +1,15 @@
-import { Menu, User } from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import ThemeController from "./theme-controller";
 import Logo from "./logo";
+import { auth } from "@/auth";
+import SigninBefore from "./signin-before";
+import SigninAfter from "./signin-after";
 
-export default function Navbar() {
+export default async function Navbar() {
 
   const menuLinkClass = `hover:text-base-content hover:bg-transparent transition`
-
+  const session = await auth();
   return (<div className="navbar bg-base-100 border-b border-base-content/30 text-base-content px-5 md:px-20">
     <div className="navbar-start">
       <div className="dropdown ">
@@ -37,13 +40,8 @@ export default function Navbar() {
       </ul>
 
     </div>
-    <div className="navbar-end">
-      <Link href="/my">
-        <div className="flex shrink-0 justify-center items-center gap-1">
-          <User className="w-5 h-5" strokeWidth={1.5} />
-          <div className="text-sm">Account</div>
-        </div>
-      </Link>
+    <div className="navbar-end ">
+      {session?<SigninAfter/>:<SigninBefore/>}
       <ThemeController/>
     </div>
   </div>)
