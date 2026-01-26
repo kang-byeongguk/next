@@ -30,7 +30,20 @@ export type Cart = {
   created_at: Date;
 };
 
-// [4] Orders 테이블
+export type UserProduct={
+  image:string;
+  title:string;
+  price:number;
+  quantity:number;
+  subtotal:number;
+  product_id:string;
+  total_price:number
+}
+export type FormattedUserProduct = Omit<UserProduct, 'price' | 'subtotal' | 'total_price'>&{
+  price:string;
+  subtotal:string;
+  total_price:string;
+}
 export type Order = {
   id: string;
   user_id: string | null; // 탈퇴한 유저일 경우 null 가능
