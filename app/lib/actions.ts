@@ -2,11 +2,12 @@
 'use server';
 
 
-import { signIn } from '@/auth';
+import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { SignSchema } from './schema';
 import bcrypt from 'bcryptjs';
 import { sql } from './data';
+import { revalidatePath } from 'next/cache';
 
 // State 타입 정의: 에러 메시지와 필드별 에러를 포함
 export type State = {
@@ -76,9 +77,9 @@ export async function createAccount(
     await sql`
         INSERT INTO users (email, password, name)
         VALUES (
-                ${email},           
-                ${hashedPassword},  
-                SPLIT_PART(${email}, '@', 1) 
+                ${email},
+                ${hashedPassword},
+                SPLIT_PART(${email}, '@', 1)
 )
         `
   } catch (error) {
@@ -101,6 +102,46 @@ export async function createAccount(
   }
 }
 
-export async function handleKaKaoLogin(){
+export async function handleKaKaoLogin() {
   await signIn("kakao");
 };
+
+type ActionResult = {
+  status: 'success' | 'error' | 'unauthorized';
+  message: string;
+};
+
+export async function addItemsToCart(productId: string, quantity: number): Promise<ActionResult> {
+  const session = await auth();
+
+  // 1. 로그인 체크
+  if (!session || !session.user || !session.user.id) {
+    return {
+      status: 'unauthorized',
+      message: 'Please signin'
+    };
+  }
+
+  try {
+    // session.user.id는 DB의 UUID입니다. (users 테이블의 id 컬럼)
+    const userId = session.user.id;
+
+    // 2. 장바구니에 담기 (PostgreSQL 쿼리 예시)
+    // ON CONFLICT: "이미 담은 상품이면 수량만 늘리고, 없으면 새로 넣어라"
+    await sql`
+      INSERT INTO carts (user_id, product_id, quantity)
+      VALUES (${userId}, ${productId}, ${quantity})
+      ON CONFLICT (user_id, product_id) 
+      DO UPDATE SET quantity = carts.quantity + ${quantity}
+    `;
+
+
+
+
+  } catch (error) {
+    console.error("Cart Error:", error);
+    return { status: 'error', message: 'Something went wrong' };
+  }
+  revalidatePath('/cart');
+  return { status: 'success', message: 'Item added to cart' };
+}

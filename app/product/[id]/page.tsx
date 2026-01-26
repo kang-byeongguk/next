@@ -1,4 +1,6 @@
 import { fetchProductById } from "@/app/lib/data"
+import AddItemBtn from "@/app/ui/product/add-item-btn";
+import BuyItemBtn from "@/app/ui/product/buy-item-btn";
 import StarRating from "@/app/ui/start-rating";
 import Image from "next/image"
 
@@ -58,12 +60,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
                 {/* 버튼 섹션 */}
                 <div className="flex gap-4 mt-auto md:mt-0">
-                    <button className="btn bg-base-200 hover:bg-base-300 text-base-content border-none w-1/2 h-12 md:h-14 text-lg font-medium rounded-xl">
-                        Add to Cart
-                    </button>
-                    <button className="btn btn-primary w-1/2 h-12 md:h-14 text-lg  font-medium rounded-xl shadow-lg shadow-primary/30">
-                        Buy now
-                    </button>
+                    <AddItemBtn id={id}/>
+                    <BuyItemBtn id={id}/>
                 </div>
             </div>
         </div>

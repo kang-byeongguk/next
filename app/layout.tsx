@@ -4,6 +4,7 @@ import Navbar from "./ui/nav-bar";
 import { inter } from "./ui/fonts";
 import { auth } from "@/auth"; // 서버 세션 가져오기
 import { SessionProvider } from "next-auth/react"; // 바로 import
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,6 +28,7 @@ export default async function RootLayout({
               <Navbar />
             </div>
             <div className="grow">{children}</div>
+            <Toaster/>
           </div>
         </SessionProvider>
       </body>
