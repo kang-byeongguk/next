@@ -37,12 +37,13 @@ export type UserProduct={
   quantity:number;
   subtotal:number;
   product_id:string;
-  total_price:number
+  total_price:number;
+  count:number;
 }
-export type FormattedUserProduct = Omit<UserProduct, 'price' | 'subtotal' | 'total_price'>&{
+export type FormattedUserProduct = Omit<UserProduct, 'price' | 'subtotal' >&{
   price:string;
   subtotal:string;
-  total_price:string;
+  formatted_total_price:string;
 }
 export type Order = {
   id: string;
@@ -57,3 +58,18 @@ export type Order = {
 export type FormattedProduct=Omit<Product,'price'>&{
   price:string;
 };
+
+export interface Address {
+  id: string;
+  full_name: string;
+  address_detail: string;
+  city: string;
+  state: string;
+  pin_code: string;
+  phone_number: string;
+}
+
+interface OrderSummaryProps {
+  addresses: Address[];
+  subtotal: number; // 서버에서 계산된 합계
+}

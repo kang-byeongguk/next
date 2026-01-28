@@ -20,9 +20,9 @@ const nextConfig: NextConfig = {
         hostname: 'k.kakaocdn.net',
         port: '',
         pathname: '/**',
-      }
+      },
+      
     ],
   },
 };
-
 export default nextConfig;
