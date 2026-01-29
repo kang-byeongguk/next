@@ -5,10 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function SigninAfter() {
+export default function UserDropdown() {
     const { data: session } = useSession();
     const [isOpen, setIsOpen] = useState(false);
-console.log(session,'세션 출력용');
     return (
         <div className="relative flex items-center">
             {isOpen && (

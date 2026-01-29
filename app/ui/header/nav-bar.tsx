@@ -1,10 +1,11 @@
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import ThemeController from "./theme-controller";
-import Logo from "./logo";
+import Logo from "../logo";
 import { auth } from "@/auth";
 import SigninBefore from "./signin-before";
 import SigninAfter from "./signin-after";
+import UserDropdown from "./signin-after";
 
 export default async function Navbar() {
 
@@ -19,15 +20,15 @@ export default async function Navbar() {
         <ul
           tabIndex={-1}
           className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-base-content/80">
-          <li><Link className={menuLinkClass} href="/product">Shop</Link></li>
           <li><Link className={menuLinkClass} href="/">Home</Link></li>
+          <li><Link className={menuLinkClass} href="/product">Shop</Link></li>
           <li><Link className={menuLinkClass} href="/">About us</Link></li>
           <li><Link className={menuLinkClass} href="/">Contact</Link></li>
-          <li><Link className={menuLinkClass} href="/product/add">Seller Dashboard</Link></li>
+          <li><Link className={menuLinkClass} href="/">Seller Dashboard</Link></li>
         </ul>
       </div>
       <Link href="/" >
-        <Logo/>
+        <Logo />
       </Link>
     </div>
     <div className="navbar-center hidden md:flex lg:gap-0">
@@ -41,8 +42,8 @@ export default async function Navbar() {
 
     </div>
     <div className="navbar-end ">
-      {session?<SigninAfter/>:<SigninBefore/>}
-      <ThemeController/>
+      {session ? <UserDropdown /> : <SigninBefore />}
+      <ThemeController />
     </div>
   </div>)
 }
