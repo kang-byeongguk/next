@@ -27,7 +27,7 @@ export default function BuyItemBtn({ id }: { id: string }) {
 
     return (
 
-        <button onClick={handleAddToCart} className="btn btn-primary w-1/2 h-12 md:h-14 text-lg  font-medium rounded-xl shadow-lg shadow-primary/30">
+        <button onClick={handleAddToCart} className="flex-1 btn btn-primary h-12 md:h-14 text-lg  font-medium rounded-xl shadow-lg shadow-primary/30">
             Buy now
         </button>
     );

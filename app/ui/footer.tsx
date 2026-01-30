@@ -1,4 +1,4 @@
-import Logo from "./logo"
+import { LogoIcon } from "./icons";
 
 export default function Footer(){
   return(
@@ -27,7 +27,7 @@ export default function Footer(){
 </footer>
 <footer className="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4">
   <aside className="grid-flow-col items-center">
-   <Logo/>
+   <LogoIcon/>
     <p>
       NextCart Industries Ltd.
       <br />

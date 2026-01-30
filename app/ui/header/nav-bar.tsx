@@ -1,11 +1,11 @@
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import ThemeController from "./theme-controller";
-import Logo from "../logo";
 import { auth } from "@/auth";
 import SigninBefore from "./signin-before";
 import SigninAfter from "./signin-after";
 import UserDropdown from "./signin-after";
+import { LogoIcon } from "../icons";
 
 export default async function Navbar() {
 
@@ -28,7 +28,7 @@ export default async function Navbar() {
         </ul>
       </div>
       <Link href="/" >
-        <Logo />
+        <LogoIcon/>
       </Link>
     </div>
     <div className="navbar-center hidden md:flex lg:gap-0">

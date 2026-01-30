@@ -1,3 +1,17 @@
+export type ActionResult = {
+  status: 'success' | 'error' | 'unauthorized';
+  message: string;
+};
+
+export type SearchParams= {
+        query?: string;
+        sort?: 'newest' | 'price_asc' | 'price_desc' | 'oldest';
+        page?: string;
+    };
+export interface  SortOption {
+  name: string;
+  value: string;
+}
 // [1] Users 테이블
 export type User = {
   id: string;

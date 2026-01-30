@@ -27,3 +27,60 @@ export const ErrorIcon = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
     </svg>
 );
+
+export const HeartIcon = () => (
+    <button aria-label="Add to wishlist" className=" absolute top-3 right-3 z-10 p-2 bg-base-100 rounded-full shadow-sm text-base-content/40 hover:text-red-500 hover:bg-red-50 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+        </svg>
+    </button>
+)
+
+export const LogoIcon = () => {
+    return (
+        <svg
+            width="150"
+            height="40"
+            viewBox="0 0 150 40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="cursor-pointer"
+        >
+            <text
+                x="0"
+                y="30"
+                fontFamily="Arial, sans-serif"
+                fontSize="32"
+                fontWeight="bold"
+                fontStyle="italic"
+                fill="#f34700"
+            >
+                Next
+            </text>
+            <text
+                x="72" // 'Next' 길이에 따라 조절 필요
+                y="30"
+                fontFamily="Arial, sans-serif"
+                fontSize="32"
+                fontWeight="bold"
+                fill="#000000"
+            >
+                Cart
+            </text>
+        </svg>
+    );
+}
+export const MagnifyingIcon = () => (
+    <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            strokeWidth="2.5"
+            fill="none"
+            stroke="currentColor"
+        >
+            <circle cx="11" cy="11" r="8" ></circle>
+            <path d="m21 21-4.3-4.3"></path>
+        </g>
+    </svg>
+)

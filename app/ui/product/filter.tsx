@@ -3,8 +3,11 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
+import { SortOption } from "@/app/lib/definitions";
 
-const sortOptions = [
+
+
+const sortOptions:SortOption[] = [
   { name: "Newest", value: "newest" },
   { name: "Price: Low", value: "price_asc" },
   { name: "Price: High", value: "price_desc" },
@@ -68,7 +71,7 @@ export default function Filter() {
       </button>
 
       {isOpen && (
-        <ul className="absolute z-50 mt-2 max-h-60 w-full overflow-auto rounded-2xl border border-base-200 bg-base-100 py-1 shadow-lg ring-1 ring-black/5 focus:outline-none duration-100">
+        <ul className="top-full absolute z-50 mt-2 max-h-60 w-full overflow-y-auto rounded-2xl border border-base-200 bg-base-100 py-1 shadow-lg ring-1 ring-black/5 focus:outline-none duration-100">
           {sortOptions.map((option) => {
             const isSelected = option.value === currentSortValue;
 

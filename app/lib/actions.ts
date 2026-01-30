@@ -9,6 +9,7 @@ import bcrypt from 'bcryptjs';
 import { sql } from './data';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { ActionResult } from './definitions';
 
 // State 타입 정의: 에러 메시지와 필드별 에러를 포함
 export type State = {
@@ -78,7 +79,7 @@ export async function createOrder(addressId: string) {
     // 트랜잭션 시작: 이 블록 안의 쿼리(tx)는 모두 하나의 트랜잭션으로 묶입니다.
     // 에러가 발생하면 자동으로 ROLLBACK 됩니다.
     return await sql.begin(async (tx) => {
-      
+
       // 1. 장바구니 확인
       const cartCheck = await tx`SELECT count(*) FROM carts WHERE user_id = ${userId}`;
       if (cartCheck[0].count === '0') {
@@ -130,10 +131,10 @@ export async function createOrder(addressId: string) {
   } catch (error) {
     // [Modified] sql.begin 내부에서 에러 발생 시 자동으로 롤백된 후 여기로 옴
     console.error('Order Transaction Error:', error);
-    
+
     // 에러 메시지 추출 (사용자 정의 에러 or 시스템 에러)
     const errorMessage = error instanceof Error ? error.message : "Failed to place order.";
-    
+
     return { success: false, message: errorMessage };
   }
 }
@@ -246,16 +247,12 @@ export async function handleKaKaoLogin() {
   await signIn("kakao");
 };
 
-type ActionResult = {
-  status: 'success' | 'error' | 'unauthorized';
-  message: string;
-};
 
 export async function addItemsToCart(productId: string, quantity: number): Promise<ActionResult> {
   const session = await auth();
 
-  // 1. 로그인 체크
-  if (!session || !session.user || !session.user.id) {
+  // 로그인 체크
+  if (!session?.user.id) {
     return {
       status: 'unauthorized',
       message: 'Please signin'
@@ -266,7 +263,6 @@ export async function addItemsToCart(productId: string, quantity: number): Promi
     // session.user.id는 DB의 UUID입니다. (users 테이블의 id 컬럼)
     const userId = session.user.id;
 
-    // 2. 장바구니에 담기 (PostgreSQL 쿼리 예시)
     // ON CONFLICT: "이미 담은 상품이면 수량만 늘리고, 없으면 새로 넣어라"
     await sql`
       INSERT INTO carts (user_id, product_id, quantity)
@@ -275,11 +271,8 @@ export async function addItemsToCart(productId: string, quantity: number): Promi
       DO UPDATE SET quantity = carts.quantity + ${quantity}
     `;
 
-
-
-
   } catch (error) {
-    console.error("Cart Error:", error);
+    console.error("Database error in addItemsToCart:", error);
     return { status: 'error', message: 'Something went wrong' };
   }
   revalidatePath('/cart');

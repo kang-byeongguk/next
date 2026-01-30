@@ -26,7 +26,7 @@ export default function AddItemBtn({ id }: { id: string }) {
   return (
     <button 
       onClick={handleAddToCart}
-      className="btn bg-base-200 hover:bg-base-300 text-base-content border-none w-1/2 h-12 md:h-14 text-lg font-medium rounded-xl transition-all active:scale-95"
+      className="btn bg-base-200 hover:bg-base-300 text-base-content border-none flex-1 h-12 md:h-14 text-lg font-medium rounded-xl transition-all active:scale-95"
     >
       Add to Cart
     </button>

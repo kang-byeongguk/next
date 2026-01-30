@@ -1,6 +1,7 @@
 import postgres from "postgres";
 import { Address, Product, User, UserProduct } from "./definitions";
 import { formatCurrency } from "./utils";
+import { idSchema } from "./schema";
 export const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 
@@ -62,17 +63,18 @@ export async function fetchFilteredProducts(
     return products;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch products.');
+    throw new Error('Failed to run fetchFilteredProducts.');
   }
 }
-export async function fetchUserAddresses(user_id:string){
+
+export async function fetchUserAddresses(user_id: string) {
   try {
     const addresses = await sql<Address[]>`
     SELECT *
     FROM addresses
     WHERE user_id=${user_id}
     `
-    
+
     return addresses
   } catch (error) {
     console.error('Database Error:', error);
@@ -137,6 +139,13 @@ export async function fetchProductsPages(query: string) {
 }
 
 export async function fetchProductById(id: string) {
+
+  const validation = idSchema.safeParse(id)
+  if (!validation.success) {
+    console.log('Invalid UUID format', id)
+    return null
+  }
+
   try {
     const data = await sql<Product[]>`
      SELECT * 

@@ -40,6 +40,8 @@ export default function Carousel() {
   const [transition, setTransition] = useState(true);
   const extendedHeroSlides = useMemo(() => [...heroSlides, heroSlides[0]], []);
   const SLIDE_DURATION = 700;
+  const AUTO_SLIDE_INTERVAL = 5000;
+
 
   useEffect(() => {
     const slideInterval = setInterval(() => {
@@ -49,9 +51,9 @@ export default function Carousel() {
         setTransition(true);
         return prev + 1;
       });
-    }, 5000);
+    }, AUTO_SLIDE_INTERVAL);
     return () => clearInterval(slideInterval);
-  }, [currentPage, extendedHeroSlides.length]);
+  }, [currentPage, extendedHeroSlides.length,AUTO_SLIDE_INTERVAL]);
 
   useEffect(() => {
     if (currentPage === extendedHeroSlides.length - 1) {
@@ -70,9 +72,10 @@ export default function Carousel() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 w-full">
+      {/* 캐러셀 이미지 영역 */}
       <div className="w-full overflow-hidden rounded-xl h-auto md:h-96 shadow-sm ">
         <div
-          className={`flex h:auto md:h-full ${transition ? `transition-transform ease-in-out` : "transition-none"
+          className={`flex h-auto md:h-full ${transition ? `transition-transform ease-in-out` : "transition-none"
             }`}
           style={{
             transform: `translateX(-${currentPage * 100}%)`,
@@ -82,7 +85,7 @@ export default function Carousel() {
           {extendedHeroSlides.map((slide, index) => (
             <div
               key={`${slide.id}-${index}`}
-              className={`w-full shrink-0 h-full flex flex-col md:flex-row items-center justify-center p-6 md:px-8 lg:px-20 md:gap-1 lg:gap-15 ${slide.bgColor}`}
+              className={`w-full shrink-0 h-auto md:h-full flex flex-col md:flex-row items-center justify-center p-6 md:px-8 lg:px-20 md:gap-1 lg:gap-15 ${slide.bgColor}`}
             >
               {/* 텍스트 영역 */}
               <div className=" flex flex-col items-center  md:items-start text-center md:text-left gap-2 md:gap-3 order-2 md:order-1 md:w-sm  shrink-0 w-full">
@@ -111,7 +114,7 @@ export default function Carousel() {
                   </Link>
                 </div>
               </div>
-              {/* 이미지 영역 */}
+              {/*아이템 이미지 영역 */}
               <div className=" flex justify-center items-center order-1 md:order-2 w-full md:w-72 h-auto md:h-72 p-4 mb-8 md:mb-0">
 
                 <div className="relative w-full h-52 md:h-full drop-shadow-xl">
@@ -130,7 +133,7 @@ export default function Carousel() {
         </div>
       </div>
 
-      {/* 페이지네이션 */}
+      {/*캐러셀 페이지네이션 영역*/}
       <div className="flex gap-2">
         {heroSlides.map((_, index) => {
           const isActive =

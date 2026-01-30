@@ -3,10 +3,14 @@ import AddItemBtn from "@/app/ui/product/add-item-btn";
 import BuyItemBtn from "@/app/ui/product/buy-item-btn";
 import StarRating from "@/app/ui/start-rating";
 import Image from "next/image"
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const product = await fetchProductById(id)
+    if(!product){
+        notFound()
+    }
     
     return (
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row p-6 md:p-16 justify-center gap-10 md:gap-16">
@@ -19,6 +23,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                             src={product.image}
                             alt={product.title}
                             fill
+                            priority
                             className="object-contain p-8" 
                         />
                     </div>
@@ -59,7 +64,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                 <hr className="border-t border-base-300 mb-8" />
 
                 {/* 버튼 섹션 */}
-                <div className="flex gap-4 mt-auto md:mt-0">
+                <div  role="group" aria-label="Product actions" className="flex gap-4">
                     <AddItemBtn id={id}/>
                     <BuyItemBtn id={id}/>
                 </div>
