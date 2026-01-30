@@ -1,9 +1,22 @@
+import { Address } from "./definitions";
+
+  export const formatDate = (date: Date) => {
+    return new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit', month: '2-digit', year: 'numeric'
+    }).format(date);
+  };
+
 export const formatCurrency= (amount:number)=>{
     return (amount /100).toLocaleString('en-us',{
         style:'currency',
         currency:'USD',
     });
 };
+export const formatAddress = (addr: Address) => {
+    return [addr.full_name, addr.address_detail, addr.city, addr.state]
+      .filter(Boolean)
+      .join(", ");
+  };
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,

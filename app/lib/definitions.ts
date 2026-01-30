@@ -3,12 +3,54 @@ export type ActionResult = {
   message: string;
 };
 
-export type SearchParams= {
-        query?: string;
-        sort?: 'newest' | 'price_asc' | 'price_desc' | 'oldest';
-        page?: string;
+export interface Address {
+  id: string;
+  full_name: string;
+  address_detail: string;
+  city: string;
+  state: string;
+  pin_code: string;
+  phone_number: string;
+}
+
+
+export interface OrderRowProps {
+  row: {
+    order_id: string;
+    total_order_amount: number;
+    status: string;
+    created_at: Date;
+    address: {
+      full_name: string;
+      address_detail: string;
+      city: string;
+      state: string;
+      pin_code: string;
+      phone_number: string;
     };
-export interface  SortOption {
+    item: {
+      product_id: string;
+      title: string;
+      image: string;
+      quantity: number;
+      price: number;
+      row_total: number;
+    };
+  }
+}
+
+export interface Quantity {
+  userId: string;
+  productId: string;
+  initialQuantity: number;
+}
+
+export type SearchParams = {
+  query?: string;
+  sort?: 'newest' | 'price_asc' | 'price_desc' | 'oldest';
+  page?: string;
+};
+export interface SortOption {
   name: string;
   value: string;
 }
@@ -20,7 +62,7 @@ export type User = {
   name: string | null;
   image: string | null;
   provider: string; // 'credentials' | 'kakao' 등
-  role:string;
+  role: string;
   created_at: Date;
 };
 
@@ -44,20 +86,20 @@ export type Cart = {
   created_at: Date;
 };
 
-export type UserProduct={
-  image:string;
-  title:string;
-  price:number;
-  quantity:number;
-  subtotal:number;
-  product_id:string;
-  total_price:number;
-  count:number;
+export type UserProduct = {
+  image: string;
+  title: string;
+  price: number;
+  quantity: number;
+  subtotal: number;
+  product_id: string;
+  total_price: number;
+  count: number;
 }
-export type FormattedUserProduct = Omit<UserProduct, 'price' | 'subtotal' >&{
-  price:string;
-  subtotal:string;
-  formatted_total_price:string;
+export type FormattedUserProduct = Omit<UserProduct, 'price' | 'subtotal'> & {
+  price: string;
+  subtotal: string;
+  formatted_total_price: string;
 }
 export type Order = {
   id: string;
@@ -69,21 +111,11 @@ export type Order = {
   created_at: Date;
 };
 
-export type FormattedProduct=Omit<Product,'price'>&{
-  price:string;
+export type FormattedProduct = Omit<Product, 'price'> & {
+  price: string;
 };
 
-export interface Address {
-  id: string;
-  full_name: string;
-  address_detail: string;
-  city: string;
-  state: string;
-  pin_code: string;
-  phone_number: string;
-}
-
-interface OrderSummaryProps {
+export interface OrderSummaryProps {
   addresses: Address[];
   subtotal: number; // 서버에서 계산된 합계
 }

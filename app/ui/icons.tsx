@@ -82,5 +82,29 @@ export const MagnifyingIcon = () => (
             <circle cx="11" cy="11" r="8" ></circle>
             <path d="m21 21-4.3-4.3"></path>
         </g>
+    </svg>)
+
+
+
+export const TriangleLeft = () =>
+(
+    <svg
+        viewBox="6 6 12 12"
+        fill="currentColor"
+        className={`w-6 h-6 sm:w-[35px] sm:h-[35px] sm:p-2 `}
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path d="M14 7L9 12L14 17V7Z" />
     </svg>
 )
+export const TriangleRight = () =>
+(
+    <svg
+        viewBox="6 6 12 12"
+        fill="currentColor"
+        className={`w-6 h-6 sm:w-[35px] sm:h-[35px] sm:p-2 `}
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path d="M10 17L15 12L10 7V17Z" />
+    </svg>
+);

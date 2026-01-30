@@ -151,8 +151,9 @@ export async function removeItem(formData: FormData) {
     `
     } catch (error) {
       console.error('Databse Error :', error);
+      throw new Error('Failed to delete the items.');
+
     }
-    console.log(`Deleting product: ${productId}`);
     revalidatePath('/cart'); //
   }
   return
