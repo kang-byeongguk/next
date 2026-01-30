@@ -1,7 +1,7 @@
 import { fetchProductById } from "@/app/lib/data"
 import AddItemBtn from "@/app/ui/product/add-item-btn";
 import BuyItemBtn from "@/app/ui/product/buy-item-btn";
-import StarRating from "@/app/ui/start-rating";
+import StarRating from "@/app/ui/star-rating";
 import Image from "next/image"
 import { notFound } from "next/navigation";
 

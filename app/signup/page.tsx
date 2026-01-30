@@ -37,7 +37,7 @@ export default function Signin() {
     }
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center bg-base-100 p-4">
+        <div className="min-h-[90vh] w-full flex items-center justify-center bg-base-100 p-4">
 
             {/* 카드 컨테이너 */}
             <div className="w-full max-w-100 bg-base-100 rounded-2xl shadow-2xl border border-base-200 overflow-hidden">

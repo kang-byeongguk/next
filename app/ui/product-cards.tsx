@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FormattedProduct } from "@/app/lib/definitions";
-import StarRating from "./start-rating";
+import StarRating from "./star-rating";
 import { HeartIcon } from "./icons";
 
 export default async function ProductCards({ products }: { products: FormattedProduct[] }) {

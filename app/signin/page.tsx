@@ -4,8 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { authenticate } from "../lib/actions";
 import ErrorToast from "../ui/toast";
-import { EmailIcon, KakaoLogo, PasswordIcon } from "../ui/icons";
-import { signIn } from "@/auth";
+import { EmailIcon, PasswordIcon } from "../ui/icons";
 import KaKaoSocialLogin from "../ui/kakao-social-login";
 
 
@@ -38,7 +37,7 @@ export default function Signin() {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-base-100 p-4">
+    <div className="min-h-[90vh] w-full flex items-center justify-center bg-base-100 p-4">
 
       {/* 카드 컨테이너 */}
       <div className="w-full max-w-100 bg-base-100 rounded-2xl shadow-2xl border border-base-200 overflow-hidden">
