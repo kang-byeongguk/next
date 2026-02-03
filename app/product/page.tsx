@@ -1,20 +1,21 @@
-import { fetchFilteredProducts, fetchLatestProducts, fetchProductsPages } from "../lib/data";
+import { Suspense } from "react";
 import { SearchParams } from "../lib/definitions";
-import ProductCards from "../ui/product-cards";
 import SortSelect from "../ui/product/filter";
-import Pagination from "../ui/product/pagination";
+import FilteredProducts from "../ui/product/filtered-products";
 import Search from "../ui/product/search";
+import { ProductGridSkeleton } from "../ui/product-cards-skeleton";
+import PaginationWrapper from "../ui/product/pagination-wrapper";
+import PaginationSkeleton from "../ui/product/pagination-skeleton";
 
 
 
 export default async function Page(props: {
-    searchParams:Promise<SearchParams>
+    searchParams: Promise<SearchParams>
 }) {
     const searchParams = await props.searchParams;
     const query = searchParams?.query || '';
     const sort = searchParams?.sort || 'newest';
     const currentPage = Number(searchParams?.page) || 1;
-    const [products,totalPages] = await Promise.all([fetchFilteredProducts(query, sort, currentPage),fetchProductsPages(query)]) 
     return (
         <div className="py-6 px-5 md:px-20 max-w-7xl mx-auto">
             <div className="flex flex-col mt-8">
@@ -25,10 +26,15 @@ export default async function Page(props: {
                         <SortSelect />
                     </div>
                 </div>
-                <ProductCards products={products} />
+                {/* <ProductCards products={products} /> */}
+                <Suspense fallback={<ProductGridSkeleton />}>
+                    <FilteredProducts query={query} sort={sort} currentPage={currentPage} />
+                </Suspense>
             </div>
             <div className="mt-5 flex w-full justify-center">
-                <Pagination totalPages={totalPages} />
+                <Suspense fallback={<PaginationSkeleton />}>
+                    <PaginationWrapper query={query} />
+                </Suspense>
             </div>
         </div>
     )
