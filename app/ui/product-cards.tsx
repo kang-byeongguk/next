@@ -4,8 +4,7 @@ import { FormattedProduct } from "@/app/lib/definitions";
 import StarRating from "./star-rating";
 import { HeartIcon } from "./icons";
 
-export default async function ProductCards({ products }: { products: FormattedProduct[] }) {
-
+export default async function ProductCards({products}:{products:FormattedProduct[]} ) {
 
   return (
     <div className="w-full pb-8">

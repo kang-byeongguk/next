@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Carousel from './ui/carousel';
-import ProductCards from './ui/product-cards';
 import Footer from './ui/footer';
-import { fetchLatestProducts } from './lib/data';
+import { ProductGridSkeleton } from './ui/product-cards-skeleton';
+import { Suspense } from 'react';
+import NonFilteredProducts from './ui/non-filtered-products';
 
 export default async function Home() {
-  const products = await fetchLatestProducts();
   return (
     // 메인 영역
     <main className="min-h-screen bg-base-100 ">
@@ -16,7 +16,9 @@ export default async function Home() {
         {/* 상품 카드 영역 */}
         <div className="flex flex-col mt-8">
           <h1 className="text-3xl font-semibold text-base-content mb-6 w-fit border-b-3 border-primary pb-0.5">New Arrivals</h1>
-          <ProductCards products={products} />
+          <Suspense fallback={<ProductGridSkeleton/>}>
+          <NonFilteredProducts/>
+          </Suspense>
         </div>
 
         {/* 상세페이지 이동 링크 */}
