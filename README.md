@@ -22,6 +22,9 @@
 6. [화면 구성](#화면-구성)
 
 ---
+## 시연영상
+https://github.com/user-attachments/assets/e4a9a3f3-5a52-4c72-9f78-56828f4d400c
+
 
 ## 프로젝트 소개
 
