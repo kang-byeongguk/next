@@ -1,6 +1,6 @@
 import postgres from "postgres";
 import { Address, Product, User, UserProduct } from "./definitions";
-import { formatCurrency } from "./utils";
+import { calculateGrowth, formatCurrency, formatNumber } from "./utils";
 import { idSchema } from "./schema";
 export const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -179,10 +179,128 @@ export async function getUser(email: string): Promise<User | undefined> {
 
 
 
+export interface RevenueChartData {
+  date: string;
+  revenue: number;
+  order: number;
+}
+
+export async function fetchRevenueChartData(): Promise<RevenueChartData[]> {
+  try {
+    // 1. DB 쿼리: 오늘 0시 기준 6일 전부터 현재까지 데이터 조회
+    // DATE_TRUNC('day', NOW()) : 오늘 날짜의 00:00:00
+    const data = await sql`
+      SELECT
+        to_char(created_at, 'YYYY-MM-DD') as date_key,
+        SUM(total_amount) as revenue,
+        COUNT(id) as order_count
+      FROM orders
+      WHERE created_at >= DATE_TRUNC('day', NOW()) - INTERVAL '6 days'
+      GROUP BY 1
+      ORDER BY 1 ASC
+    `;
+
+    // 2. 데이터 빈 곳 채우기 (Zero-Filling)
+    const chartData: RevenueChartData[] = [];
+    const today = new Date();
+
+    // 6일 전부터 오늘까지 (총 7일) 반복
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(today.getDate() - i);
+      
+      // 비교용 키 (YYYY-MM-DD)
+      const dateKey = d.toISOString().split('T')[0];
+      
+      // 차트 표시용 날짜 (예: 12 Aug)
+      const displayDate = new Intl.DateTimeFormat('en-US', {
+        day: 'numeric',
+        month: 'short',
+      }).format(d);
+
+      // DB 데이터 매칭
+      const found = data.find((row) => row.date_key === dateKey);
+
+      chartData.push({
+        date: displayDate,
+        revenue: found ? Number(found.revenue) : 0,
+        order: found ? Number(found.order_count) : 0,
+      });
+    }
+
+    return chartData;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch revenue data.');
+  }
+}
 
 
 
+export async function fetchCardData() {
+  try {
+    // 1. 매출(Sales) 및 주문(Orders) 데이터 조회
+    // orders 테이블에서 최근 7일(current)과 그 전 7일(previous) 데이터를 집계합니다.
+    const orderDataPromise = sql`
+      SELECT
+        -- 이번 주 매출 합계
+        SUM(CASE WHEN created_at >= NOW() - INTERVAL '7 days' THEN total_amount ELSE 0 END) AS current_sales,
+        -- 지난 주 매출 합계
+        SUM(CASE WHEN created_at >= NOW() - INTERVAL '14 days' AND created_at < NOW() - INTERVAL '7 days' THEN total_amount ELSE 0 END) AS prev_sales,
+        -- 이번 주 주문 건수
+        COUNT(CASE WHEN created_at >= NOW() - INTERVAL '7 days' THEN 1 END) AS current_orders,
+        -- 지난 주 주문 건수
+        COUNT(CASE WHEN created_at >= NOW() - INTERVAL '14 days' AND created_at < NOW() - INTERVAL '7 days' THEN 1 END) AS prev_orders
+      FROM orders
+    `;
 
+    // 2. 방문자(Visitors) 데이터 조회
+    // visit_logs 테이블에서 동일한 방식으로 집계합니다.
+    const visitDataPromise = sql`
+      SELECT
+        COUNT(CASE WHEN visited_at >= NOW() - INTERVAL '7 days' THEN 1 END) AS current_visitors,
+        COUNT(CASE WHEN visited_at >= NOW() - INTERVAL '14 days' AND visited_at < NOW() - INTERVAL '7 days' THEN 1 END) AS prev_visitors
+      FROM visit_logs
+    `;
+
+    // 병렬로 쿼리 실행하여 속도 최적화
+    const [orderResult, visitResult] = await Promise.all([
+      orderDataPromise,
+      visitDataPromise
+    ]);
+
+    const data = orderResult[0];
+    const visit = visitResult[0];
+
+    // DB에서 가져온 값들은 문자열일 수 있으므로 숫자로 변환
+    const currentSales = Number(data.current_sales || 0);
+    const prevSales = Number(data.prev_sales || 0);
+    const currentOrders = Number(data.current_orders || 0);
+    const prevOrders = Number(data.prev_orders || 0);
+    const currentVisitors = Number(visit.current_visitors || 0);
+    const prevVisitors = Number(visit.prev_visitors || 0);
+
+    // 3. UI에 맞게 데이터 가공하여 리턴
+    return {
+      totalSales: {
+        value: formatCurrency(currentSales),         // 예: $983,410
+        growth: calculateGrowth(currentSales, prevSales) // 예: +3.34%
+      },
+      totalOrders: {
+        value: formatNumber(currentOrders),          // 예: 58,375
+        growth: calculateGrowth(currentOrders, prevOrders)
+      },
+      totalVisitors: {
+        value: formatNumber(currentVisitors),        // 예: 237,782
+        growth: calculateGrowth(currentVisitors, prevVisitors)
+      }
+    };
+
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch card data.');
+  }
+}
 
 
 

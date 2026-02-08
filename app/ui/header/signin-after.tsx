@@ -1,5 +1,5 @@
 "use client";
-import { LogOut, ShoppingBag, ShoppingCart } from "lucide-react";
+import { LayoutDashboard, LogOut, ShoppingBag, ShoppingCart, UserCog } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -61,7 +61,7 @@ function UserIcon({ user }: {
 }
 
 function UserMenu({ user, setIsOpen }: {
-    user?: { name?: string | null; email?: string | null; image?: string | null },
+    user?: { name?: string | null; email?: string | null; image?: string | null ,role:string},
     setIsOpen: (v: boolean) => void
 }) {
     return (
@@ -98,7 +98,15 @@ function UserMenu({ user, setIsOpen }: {
                 <ShoppingBag size={16} strokeWidth={2.75} />
                 <p>My Orders</p>
             </Link>
-
+            {/* {유저가 어드민이면 링크 만들기} */}
+            {user?.role==='admin'?<Link
+                href="/admin"
+                onClick={() => setIsOpen(false)}
+                className="px-6 hover:bg-base-200/50 py-4 border-b border-base-content/10 font-semibold text-xs text-base-content/80 flex items-center gap-x-10 cursor-pointer transition-colors"
+            >
+                <UserCog size={16} strokeWidth={2.75}/>
+                <p>Admin Page</p>
+            </Link>:null}
             <button
                 onClick={() => signOut()}
                 className="px-6 hover:bg-red-50 py-4 font-semibold text-xs text-error flex items-center gap-x-10 cursor-pointer w-full text-left transition-colors"

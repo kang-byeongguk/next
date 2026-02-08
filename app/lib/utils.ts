@@ -6,6 +6,23 @@ import { Address } from "./definitions";
     }).format(date);
   };
 
+
+// [NEW] 천 단위 콤마 찍기 (주문량, 방문자수용)
+export const formatNumber = (num: number) => {
+  return new Intl.NumberFormat('en-US').format(num);
+};
+
+// [NEW] 전주 대비 성장률 계산 (소수점 2자리 + 부호)
+export const calculateGrowth = (current: number, previous: number) => {
+  if (previous === 0) {
+    return current > 0 ? '+100.00%' : '0.00%';
+  }
+  const growth = ((current - previous) / previous) * 100;
+  // 양수면 +, 음수면 그대로 - 붙음
+  const sign = growth > 0 ? '+' : ''; 
+  return `${sign}${growth.toFixed(2)}%`;
+};
+
 export const formatCurrency= (amount:number)=>{
     return (amount /100).toLocaleString('en-us',{
         style:'currency',

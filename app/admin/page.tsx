@@ -1,0 +1,48 @@
+import { fetchCardData, fetchRevenueChartData } from '@/app/lib/data';
+import DashboardCard from '../ui/admin/dashboard-card';
+import RevenueChart from '../ui/admin/revenue-chart';
+export default async function Page() {
+    // 구조 분해 할당으로 데이터 받기
+    const { totalSales, totalOrders, totalVisitors } = await fetchCardData();
+    const chartData = await fetchRevenueChartData();
+
+    return (
+        <div className="max-w-7xl mx-auto">
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-10">
+                {/* Sales Card */}
+                <DashboardCard
+                    title="Total Sales"
+                    value={totalSales.value}
+                    growth={totalSales.growth}
+                    type="sales"
+                />
+
+                {/* Orders Card */}
+                <DashboardCard
+                    title="Total Orders"
+                    value={totalOrders.value}
+                    growth={totalOrders.growth}
+                    type="orders"
+                />
+
+                {/* Visitors Card */}
+                <DashboardCard
+                    title="Total Visitors"
+                    value={totalVisitors.value}
+                    growth={totalVisitors.growth}
+                    type="visitors"
+                />
+            </div>
+            <div className="grid gap-6  lg:grid-cols-12 mt-10">
+                <div className="lg:col-span-8">
+                    <RevenueChart data={chartData} />
+                </div>
+                <div className="lg:col-span-4">
+                    <RevenueChart data={chartData} />
+                </div>
+
+            </div>
+        </div>
+    );
+}
