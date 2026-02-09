@@ -24,7 +24,7 @@ export default async function Navbar() {
           <li><Link className={menuLinkClass} href="/product">Shop</Link></li>
           <li><Link className={menuLinkClass} href="/">About us</Link></li>
           <li><Link className={menuLinkClass} href="/">Contact</Link></li>
-          <li><Link className={menuLinkClass} href="/">Seller Dashboard</Link></li>
+          <li><Link className={menuLinkClass} href="/seller">Seller Dashboard</Link></li>
         </ul>
       </div>
       <Link href="/" >
@@ -37,7 +37,7 @@ export default async function Navbar() {
         <li><Link className={menuLinkClass} href="/product">Shop</Link></li>
         <li><Link className={menuLinkClass} href="/">About us</Link></li>
         <li><Link className={menuLinkClass} href="/">Contact</Link></li>
-        <li><Link className={`${menuLinkClass} border-base-content/90 border rounded-full text-xs py-1.5 px-4`} href="/product/add" >Seller Dashboard</Link></li>
+        <li><Link className={`${menuLinkClass} border-base-content/90 border rounded-full text-xs py-1.5 px-4`} href="/seller" >Seller Dashboard</Link></li>
       </ul>
 
     </div>
