@@ -4,12 +4,13 @@
 
 import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { AddressSchema, SignSchema } from './schema';
+import { AddressSchema, productSchema, SignSchema } from './schema';
 import bcrypt from 'bcryptjs';
 import { sql } from './data';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { ActionResult } from './definitions';
+import { put } from '@vercel/blob';
 
 // State 타입 정의: 에러 메시지와 필드별 에러를 포함
 export type State = {
@@ -337,4 +338,60 @@ export async function addAddress(prevState: FormState, formData: FormData): Prom
 
   revalidatePath('/cart');
   redirect('/cart');
+}
+
+
+export async function uploadProduct(userId:string,formData:FormData){
+
+
+
+  const rawData={
+    title:formData.get('title'),
+    price:formData.get('price'),
+    description:formData.get('description'),
+    category:formData.get('category'),
+    image:formData.get('image')
+
+  };
+
+  const validatedFields=productSchema.safeParse(rawData)
+
+  if (!validatedFields.success){
+    console.error(validatedFields.error.flatten().fieldErrors);
+    throw new Error('입력 값이 올바르지 않습니다.');
+
+  }
+
+  const {title,price,description,category,image}=validatedFields.data;
+  const blob=await put(`product/${Date.now()}-${image.name}`,image,{
+    access:'public'
+  })
+  
+
+try {
+    await sql`
+      INSERT INTO products (
+        title, 
+        price, 
+        description, 
+        image, 
+        user_id, 
+        category
+      ) VALUES (
+        ${title}, 
+        ${price}, 
+        ${description ?? null}, 
+        ${blob.url}, 
+        ${userId}, 
+        ${category}
+      )
+    `;
+  } catch (error) {
+    console.error("DB Error:", error);
+    throw new Error("데이터베이스 저장 중 오류가 발생했습니다.");
+  }
+
+  // 5. 성공 후 이동
+  revalidatePath('/product')
+  redirect('/product');
 }

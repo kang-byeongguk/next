@@ -126,7 +126,7 @@ export default function RevenueChart({ data }: { data: RevenueChartData[] }) {
   };
 
   return (
-    <div className="w-full bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+    <div className="w-full h-full bg-base-100 rounded-2xl p-6 shadow-sm border border-gray-100">
       {/* 헤더 */}
       <div className="flex justify-between items-center mb-6">
         <div>

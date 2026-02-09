@@ -5,6 +5,45 @@ import { idSchema } from "./schema";
 export const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 
+// 차트용 데이터 타입 정의
+export type CategoryData = {
+  category: string;
+  total_sales: number;
+  formatted_sales: string;
+};
+
+export async function fetchTopCategories(): Promise<CategoryData[]> {
+  try {
+    // 1. order_items(가격*수량)와 products(카테고리), orders(상태확인)를 조인
+    // 2. 카테고리별 그룹화 및 매출 합계 계산
+    // 3. 매출액 내림차순 정렬 후 상위 4개 추출
+    const data = await sql<CategoryData[]>`
+      SELECT 
+        p.category,
+        SUM(oi.quantity * oi.price) AS total_sales
+      FROM order_items oi
+      JOIN products p ON oi.product_id = p.id
+      JOIN orders o ON oi.order_id = o.id
+      WHERE o.status = 'PAID'
+      GROUP BY p.category
+      ORDER BY total_sales DESC
+      LIMIT 4
+    `;
+
+    // 4. 화폐 포맷팅 적용 후 반환
+    return data.map((item) => ({
+      ...item,
+      total_sales: Number(item.total_sales), // numeric 타입은 string으로 올 수 있어 변환
+      formatted_sales: formatCurrency(Number(item.total_sales)),
+    }));
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch top categories data.');
+  }
+}
+
+
+
 export async function fetchLatestProducts() {
   try {
     const data = await sql<Product[]>`

@@ -27,7 +27,8 @@ export default function DashboardCard({
   return (
     // bg-base-100: 테마의 기본 배경색 (보통 흰색이나 어두운 회색)
     // border-base-200: 배경보다 살짝 진한 테두리
-    <div className="rounded-[20px] bg-base-100 p-6 shadow-sm border border-base-200 flex flex-col justify-between h-full">
+    <div className="sm:col-span-6 lg:col-span-4">
+    <div className=" rounded-[20px] bg-base-100 p-6 shadow-sm border border-base-200 flex flex-col justify-between h-full">
       
       {/* 상단: 타이틀 + 아이콘 */}
       <div className="flex items-center justify-between mb-4">
@@ -57,6 +58,7 @@ export default function DashboardCard({
           <span className="text-xs text-base-content/40 mt-1">vs last week</span>
         </div>
       </div>
+    </div>
     </div>
   );
 }

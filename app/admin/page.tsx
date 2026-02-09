@@ -1,15 +1,18 @@
-import { fetchCardData, fetchRevenueChartData } from '@/app/lib/data';
+import { fetchCardData, fetchRevenueChartData, fetchTopCategories } from '@/app/lib/data';
 import DashboardCard from '../ui/admin/dashboard-card';
 import RevenueChart from '../ui/admin/revenue-chart';
+import TopCategoriesChart from '../ui/admin/top-categories-chart';
 export default async function Page() {
     // 구조 분해 할당으로 데이터 받기
     const { totalSales, totalOrders, totalVisitors } = await fetchCardData();
     const chartData = await fetchRevenueChartData();
+    const topCategories = await fetchTopCategories();
+
 
     return (
         <div className="max-w-7xl mx-auto">
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-10">
+            <div className="grid gap-6 sm:grid-cols-12 mt-10">
                 {/* Sales Card */}
                 <DashboardCard
                     title="Total Sales"
@@ -34,15 +37,17 @@ export default async function Page() {
                     type="visitors"
                 />
             </div>
-            <div className="grid gap-6  lg:grid-cols-12 mt-10">
-                <div className="lg:col-span-8">
+            <div className="grid gap-6  lg:grid-cols-12 mt-10 mb-10">
+                <div className="col-span-12 lg:col-span-8">
                     <RevenueChart data={chartData} />
                 </div>
-                <div className="lg:col-span-4">
-                    <RevenueChart data={chartData} />
+                <div className="col-span-12 lg:col-span-4">
+                    <TopCategoriesChart data={topCategories} />
                 </div>
 
             </div>
         </div>
     );
 }
+
+
