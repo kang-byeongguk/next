@@ -3,10 +3,15 @@ import DashboardCard from '../ui/admin/dashboard-card';
 import RevenueChart from '../ui/admin/revenue-chart';
 import TopCategoriesChart from '../ui/admin/top-categories-chart';
 export default async function Page() {
-    // 구조 분해 할당으로 데이터 받기
-    const { totalSales, totalOrders, totalVisitors } = await fetchCardData();
-    const chartData = await fetchRevenueChartData();
-    const topCategories = await fetchTopCategories();
+    const [
+        { totalSales, totalOrders, totalVisitors },
+        chartData,
+        topCategories
+    ] = await Promise.all([
+        fetchCardData(),
+        fetchRevenueChartData(),
+        fetchTopCategories()
+    ]);
 
 
     return (
