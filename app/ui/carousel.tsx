@@ -122,7 +122,7 @@ export default function Carousel() {
                     src={slide.imgSrc}
                     alt={slide.headline}
                     fill
-                    sizes="(max-width: 768px) 100vw, 30vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                     className="object-contain hover:scale-105 transition-transform duration-500"
                     priority={index === 0}
                   />
