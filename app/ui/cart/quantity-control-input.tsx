@@ -26,13 +26,14 @@ export default function QuantityControl({ userId, productId, initialQuantity }: 
     }
   }, 300);
 
-  // 통합 업데이트 핸들러 (버튼용)
+  // 버튼 용 함수, 1이하는 필터링
   const handleButtonUpdate = (newQty: number) => {
     if (newQty < 1) return;
     setQuantity(String(newQty));
     debouncedServerUpdate(newQty);
   };
 
+  // 유저인풋 필터링 후 형식에 맞는 데이터만 수정 요청
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value;
 
@@ -51,6 +52,7 @@ export default function QuantityControl({ userId, productId, initialQuantity }: 
   };
 
   // 포커스 아웃 핸들러
+  // parseInt는 빈문자열이거나 숫자 형식이 아니면 NaN을 반환
   const handleBlur = () => {
     if (quantity === "" || Number.isNaN(parseInt(quantity))) {
       setQuantity(String(initialQuantity));
