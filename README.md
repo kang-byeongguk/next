@@ -37,6 +37,8 @@ https://github.com/user-attachments/assets/06695949-721c-4206-84c7-49553e6ca6f9
 
 Next.js App Router와 Server Actions를 활용한 이커머스 플랫폼입니다.  
 REST API 대신 Server Actions를 사용하여 서버 로직을 구현했으며, Neon DB(Serverless Postgres)와 NextAuth를 통해 데이터 관리 및 인증 기능을 구현했습니다.
+Chart.js를 통해 관리자 대시보드를 구현했습니다.
+
 
 ---
 
@@ -68,11 +70,14 @@ REST API 대신 Server Actions를 사용하여 서버 로직을 구현했으며,
 
 ### 시스템 구조도
 
-<img width="2816" alt="시스템 아키텍처" src="https://github.com/user-attachments/assets/3681d6bc-e0fb-4c6f-9964-ca09a1f65ad9" />
+<img width="2816" height="1504" alt="시스템 구조도" src="https://github.com/user-attachments/assets/63d66ad3-d6a5-4356-bcc4-bc824e68f115" />
+
+
 
 - **Frontend:** Next.js 16 (App Router)
 - **Backend:** Next.js Server Actions
 - **Database:** Neon (PostgreSQL)
+- **Storage:** Vercel Blob (이미지 파일 관리)
 - **Deployment:** Vercel
 
 ### 페이지 구조도
