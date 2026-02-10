@@ -99,7 +99,7 @@ Chart.js를 통해 관리자 대시보드를 구현했습니다.
 
 ### 3. 커스텀 UI 컴포넌트 라이브러리
 - 라이브러리 없이 직접 구현한 컴포넌트
-  - 캐러셀 (터치/드래그 지원)
+  - 캐러셀
   - 드롭다운 셀렉트
   - 페이지네이션
 - 재사용 가능한 컴포넌트 설계 및 Props 인터페이스 정의
@@ -112,7 +112,6 @@ Chart.js를 통해 관리자 대시보드를 구현했습니다.
 ### 5. Chart.js 기반 관리자 대시보드
 - **일별 판매 분석 차트**
   - 최근 일주일 상품 판매 개수 및 판매액 시각화
-  - Line/Bar Chart로 일별 트렌드 파악
 - **카테고리별 판매 분석**
   - 도넛 차트를 활용한 카테고리별 총 판매량 비율 표시
 - **주간 성과 지표 카드**
@@ -289,5 +288,20 @@ Lighthouse 성능 점수가 낮았고, LCP(Largest Contentful Paint)가 3.2초�
     <td><img src="https://github.com/user-attachments/assets/420f66d8-653a-4ee1-b4bf-b818f85ac17e" alt="주문내역 Mobile" /></td>
     <td><img src="https://github.com/user-attachments/assets/2162d546-08d1-4c45-8845-f7df7d2f3dd5" alt="로그인 Desktop" /></td>
     <td><img src="https://github.com/user-attachments/assets/eabaf0af-93c4-4236-8ba6-0c1c0c27a289" alt="로그인 Mobile" /></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>상품 등록 (Desktop)</th>
+    <th>상품 등록 (Mobile)</th>
+    <th>대시보드 (Desktop)</th>
+    <th>대시보드 (Mobile)</th>
+  </tr>
+  <tr>
+    <td><img  src="https://github.com/user-attachments/assets/24dc2b90-e6dc-417f-9238-0f122fdd6e1f " alt="상품등록 Desktop" /></td>
+    <td><img  src="https://github.com/user-attachments/assets/14435642-d6a1-47c5-b8bd-0ebf47652bf5" alt="상품등록 Mobile" /></td>
+    <td><img src="https://github.com/user-attachments/assets/99169b0c-2597-4225-93f5-3d30c95bb811" alt="대시보드 Desktop" /></td>
+    <td><img  src="https://github.com/user-attachments/assets/dfdf5d21-e436-4e2b-86a1-46ec55ea2894" alt="대시보드 Mobile" /></td>
   </tr>
 </table>
