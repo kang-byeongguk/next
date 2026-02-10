@@ -28,7 +28,8 @@
 ---
 
 ## 시연 영상
-https://github.com/user-attachments/assets/e4a9a3f3-5a52-4c72-9f78-56828f4d400c
+https://github.com/user-attachments/assets/06695949-721c-4206-84c7-49553e6ca6f9
+
 
 ---
 
