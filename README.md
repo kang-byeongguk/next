@@ -77,7 +77,7 @@ REST API 대신 Server Actions를 사용하여 서버 로직을 구현했으며,
 
 ### 페이지 구조도
 
-<img width="2638" alt="페이지 구조도" src="https://github.com/user-attachments/assets/27c22f98-66b7-4620-b6e8-45f87657b9d6" />
+<img width="2638"  alt="NextCart 구조도 " src="https://github.com/user-attachments/assets/693f6092-58f5-4f4f-98b1-4f7bf3b91285" />
 
 ---
 
